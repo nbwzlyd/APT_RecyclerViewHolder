@@ -25,6 +25,7 @@ public class AndroidSaxHandler extends DefaultHandler {
     @Override
     public void startDocument() throws SAXException {
         super.startDocument();
+        list.clear();
     }
 
     @Override

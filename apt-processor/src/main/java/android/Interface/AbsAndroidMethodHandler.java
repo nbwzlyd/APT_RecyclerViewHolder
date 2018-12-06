@@ -1,12 +1,12 @@
 package android.Interface;
 
 
-public abstract class AbsAndroidPackageHandler implements IAndroidPackageHandler {
+public abstract class AbsAndroidMethodHandler implements IAndroidMethodHandler {
 
     protected String packageName;
     protected String className;
 
-    public AbsAndroidPackageHandler(String packageName, String className) {
+    public AbsAndroidMethodHandler(String packageName, String className) {
         this.packageName = packageName;
         this.className = className;
     }

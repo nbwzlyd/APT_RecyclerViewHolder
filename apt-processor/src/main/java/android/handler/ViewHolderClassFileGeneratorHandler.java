@@ -1,9 +1,9 @@
 package android.handler;
 
 import android.Constant.AndroidConstant;
-import android.Factory.AndroidPackageFatory;
-import android.Interface.DefaultAndroidHandler;
-import android.Interface.IAndroidPackageHandler;
+import android.Factory.AndroidMethodMapFactory;
+import android.Interface.DefaultAndroidMethodHandler;
+import android.Interface.IAndroidMethodHandler;
 import android.androidViewTag.AndroidView;
 
 import com.example.apt_annotation.ViewHolder;
@@ -20,22 +20,23 @@ import javax.annotation.processing.Filer;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.Modifier;
 
-public class ClassGeneratorHandler {
+public class ViewHolderClassFileGeneratorHandler implements IJavaFileGeneratorHandler {
 
     private Element mElement;
     private ViewHolder mHoder;
     private Filer mFiler;
     private List<AndroidView> mList;
-    private AndroidPackageFatory mAndroidFactory;
+    private AndroidMethodMapFactory mAndroidFactory;
 
-    public ClassGeneratorHandler(Filer filer, List<AndroidView> list, Element element) {
+    public ViewHolderClassFileGeneratorHandler(Filer filer, List<AndroidView> list, Element element) {
         mElement = element;
         mHoder = element.getAnnotation(ViewHolder.class);
         mFiler = filer;
         mList = list;
-        mAndroidFactory = new AndroidPackageFatory();
+        mAndroidFactory = AndroidMethodMapFactory.getInstance();
     }
 
+    @Override
     public void generatorJavaFile() {
 
         ClassName className = ClassName.get(AndroidConstant.Android_V7_Package, AndroidConstant.Android_ViewClssRecyclerView, "ViewHolder");
@@ -64,9 +65,9 @@ public class ClassGeneratorHandler {
 
         for (AndroidView androidView : mList) {//AllViews
 
-            IAndroidPackageHandler handler = mAndroidFactory.getPackageHandlerMap().get(androidView.className);
+            IAndroidMethodHandler handler = mAndroidFactory.getPackageHandlerMap().get(androidView.className);
             if (handler == null) {
-                handler = new DefaultAndroidHandler(androidView.packageName, androidView.className);
+                handler = new DefaultAndroidMethodHandler(androidView.packageName, androidView.className);
                 mAndroidFactory.addPackHandler(handler);
             }
 
@@ -80,15 +81,13 @@ public class ClassGeneratorHandler {
             builder.addField(fieldSpec1);
             //findViewById
             constructorBuilder.addStatement(handler.generatorFindViewById(androidView.ViewName, androidView.id),
-                    ClassName.get(mHoder.packageName(),
-                    "R"));
+                    ClassName.get(mHoder.packageName(),"R"));
         }
-
         builder.addMethod(constructorBuilder.build())
                 .addMethod(BindDataBuilder.build())
                 .addField(fieldSpec);
 
-        JavaFile javaFile = JavaFile.builder(mHoder.packageName(), builder.build())
+        JavaFile javaFile = JavaFile.builder("com", builder.build())
                 .build();
 
         try {

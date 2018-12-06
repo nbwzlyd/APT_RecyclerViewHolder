@@ -1,7 +1,9 @@
 package com.example.apy_processor;
+import android.Factory.AndroidMethodMapFactory;
 import android.XmlParseUtil;
 import android.handler.AndroidSaxHandler;
-import android.handler.ClassGeneratorHandler;
+import android.handler.ViewHolderClassFileGeneratorHandler;
+import android.handler.IJavaFileGeneratorHandler;
 
 import com.example.apt_annotation.ViewHolder;
 import com.google.auto.service.AutoService;
@@ -22,6 +24,7 @@ import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.Elements;
+import javax.tools.Diagnostic;
 import javax.xml.parsers.SAXParser;
 
 
@@ -31,8 +34,10 @@ public class ViewHolderProcessor extends AbstractProcessor {
     private Messager mMessager;
     private Elements mElementUtils;
     private Filer mFiler;
-    private Map<String,ClassGeneratorHandler> classGeneratorHandlerMap = new HashMap<>();
+    private Map<String,IJavaFileGeneratorHandler> classGeneratorHandlerMap = new HashMap<>();
 
+    private SAXParser saxParser;
+    private AndroidSaxHandler saxHandler;
     @Override
     public Set<String> getSupportedAnnotationTypes() {
         Set<String> set = new HashSet<>();
@@ -58,8 +63,12 @@ public class ViewHolderProcessor extends AbstractProcessor {
         Set<? extends Element> elements = roundEnvironment.getElementsAnnotatedWith(ViewHolder.class);
         for (Element element : elements) {
             ViewHolder holder = element.getAnnotation(ViewHolder.class);
-            SAXParser saxParser = XmlParseUtil.getSaxParser();
-            AndroidSaxHandler saxHandler = new AndroidSaxHandler();
+            if (saxParser==null) {
+                saxParser = XmlParseUtil.getSaxParser();
+            }
+            if (saxHandler==null){
+                saxHandler = new AndroidSaxHandler();
+            }
             try {
                 saxParser.parse(new File(holder.layoutPath()),saxHandler);
             } catch (SAXException e) {
@@ -68,12 +77,12 @@ public class ViewHolderProcessor extends AbstractProcessor {
                 e.printStackTrace();
             }
 
-            ClassGeneratorHandler handler = classGeneratorHandlerMap.get(element.getEnclosingElement().toString());
+            IJavaFileGeneratorHandler handler = classGeneratorHandlerMap.get(element.getSimpleName().toString());
             if (handler==null){
-                handler = new ClassGeneratorHandler(mFiler,saxHandler.getList(),element);
-                classGeneratorHandlerMap.put(element.getEnclosingElement().toString(),handler);
-                handler.generatorJavaFile();
+                handler = new ViewHolderClassFileGeneratorHandler(mFiler,saxHandler.getList(),element);
+                classGeneratorHandlerMap.put(element.getSimpleName().toString(),handler);
             }
+            handler.generatorJavaFile();
         }
 
         return false;

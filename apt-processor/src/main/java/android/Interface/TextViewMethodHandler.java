@@ -1,7 +1,7 @@
 package android.Interface;
 
-public class TextViewPackageHandler extends AbsAndroidPackageHandler {
-    public TextViewPackageHandler(String packageName,String className){
+public class TextViewMethodHandler extends AbsAndroidMethodHandler {
+    public TextViewMethodHandler(String packageName, String className){
         super(packageName,className);
     }
 

@@ -1,8 +1,6 @@
 package android.Interface;
 
-import android.androidViewTag.AndroidView;
-
-public interface IAndroidPackageHandler {
+public interface IAndroidMethodHandler {
     public String getPackageName();
     String getViewClassName();
     String generatorMethod(String varName);

@@ -1,9 +1,7 @@
 package android.Interface;
 
-import android.androidViewTag.AndroidView;
-
-public class ImageViewPackageHandler extends AbsAndroidPackageHandler {
-    public ImageViewPackageHandler(String packageName,String className){
+public class ImageViewMethodHandler extends AbsAndroidMethodHandler {
+    public ImageViewMethodHandler(String packageName, String className){
         super(packageName,className);
     }
 

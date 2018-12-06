@@ -14,7 +14,7 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp">
         <!-- 商品图片 -->
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/product_img"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -27,7 +27,7 @@
             android:background="#0D000000"
             android:visibility="gone" />
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/iv_player_view"
             android:layout_width="45dp"
             android:layout_height="45dp"
@@ -35,7 +35,7 @@
             android:visibility="gone"/>
     </FrameLayout>
     <!--打标-->
-    <com.facebook.drawee.view.SimpleDraweeView
+    <ImageView
         android:id="@+id/product_tag_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -85,15 +85,8 @@
         android:textColor="#818181"
         android:textSize="14dp"
         tools:text="西装作为职场必备 ITEM其修身线条，挺括的外观，舒适的穿着西装作为职场必备 ITEM其修身线条，挺括的外观" />
-    <com.jd.lib.worthbuy.view.view.OverSeaMarksView
-        android:id="@+id/flag_marks"
-        android:layout_width="wrap_content"
-        android:layout_height="13dp"
-        android:layout_alignLeft="@+id/product_desc"
-        android:layout_alignBottom="@+id/product_img_container"
-        />
     <!--喜欢人数&点赞-->
-    <com.jd.lib.worthbuy.view.view.CommonLikeView
+    <View
         android:id="@+id/like_view"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
@@ -112,7 +105,7 @@
         android:layout_marginTop="27.5dp"
         android:layout_toRightOf="@id/product_img_container">
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/title_logo"
             android:layout_width="21dp"
             android:layout_height="14dp"
