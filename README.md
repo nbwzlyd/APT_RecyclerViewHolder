@@ -3,7 +3,6 @@
 ![自动生成代码](https://github.com/nbwzlyd/APT_RecyclerViewHolder/blob/master/app/gif/code.gif)
 @[TOC](这里写自定义目录标题)
 具体看博客 https://blog.csdn.net/wzlyd1/article/details/85005840
-
 @[TOC](这里写自定义目录标题)
 
 # 开题
@@ -188,10 +187,66 @@ public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnv
 网上说有message选项卡，不知道为什么我的没有
 
 2. R包无法导入，之前刚写完的时候没问题，但是现在突然出现了，不知道原因，另外，如果生成的模板文件如果包名和你的app包名重复，R的包更是无法导入，原因未知，所以我现在随便写了一个com包。
-##  代码生成办法
-一键，点击锤子按钮即可 具体看github 
-[apt一键生成viewHolder](https://github.com/nbwzlyd/APT_RecyclerViewHolder)
+##  使用方法
+在我们的实体类中，使用注解，如demo中的TestEntity
+代码如下
+
+```
+@ViewHolder(layoutPath ="/Users/liyaodong/android_dev/Study/APT/app/src/main/res/layout/view_card_product.xml",
+ViewHolderName = "MyViewHolder",
+        packageName = "com.example.androidopt")
+public class TestEntity {
+    String title;
+    String des;
+}
+
+```
+这样，我们的xml布局将自动解析，并且与实体类进行绑定
+并且自动绑定一些常见方法，如setText(xxx),setImageResoure(xxx)，
+如果有额外的方法需求，继承类**AbsAndroidMethodHandler**，重写
+
+```
+@Override
+    public String generatorMethod(String varName) {
+        return null;
+    }
+```
+即可，记得把具体类加入到AndroidMethodMapFactory工厂方法的map中，进行所有view方法的统一管理，这个map会根据view类型自动寻找适合的methodHandler类进行方法生成。
+然后一键，点击锤子按钮即可 
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20181214165859407.gif)
 
 生成位置在
 app--->build--->generated-->source-->apt 下面
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20181214163956395.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3d6bHlkMQ==,size_16,color_FFFFFF,t_70)
+
+## 重要类及函数
+
+```
+public abstract class AbsAndroidMethodHandler implements IAndroidMethodHandler
+```
+方法生成类，具体方法
+
+```
+@Override
+    public String getPackageName() {
+        return packageName;
+    }
+
+    @Override
+    public String getViewClassName() {
+        return className;
+    }
+
+    @Override
+    public String generatorMethod(String varName) {
+        return null;
+    }
+
+    @Override
+    public String generatorFindViewById(String ViewName, String idName) {
+        return ViewName + " = itemView.findViewById($T.id." + idName+")";
+    }
+```
+具体实现类 **TextViewMethodHandler ImageViewMethodHandler**
+
+
