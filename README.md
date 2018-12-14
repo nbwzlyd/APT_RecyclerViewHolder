@@ -4,6 +4,8 @@
 @[TOC](这里写自定义目录标题)
 具体看博客 https://blog.csdn.net/wzlyd1/article/details/85005840
 
+@[TOC](这里写自定义目录标题)
+
 # 开题
 
 注解在很多框架中频繁的使用，比如大名鼎鼎的ButterKnife，ButterKnife运用的就是编译时注解,ButterKnife在我们编译时，就根据注解，自动生成了一些辅助类。当然还有EventBus3,也用到了注解的方法。所以，学习注解显得就尤为重要。
@@ -178,7 +180,7 @@ public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnv
 
 ##  整体架构
 写这个标题，我自己都笑了，一个demo有啥架构，不过还是贴上来吧，毕竟把demo完整介绍一遍也不现实
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20181214163109751.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3d6bHlkMQ==,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20181214163740980.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3d6bHlkMQ==,size_16,color_FFFFFF,t_70)
 
 ## 遇到的问题
 1.如果你想看mMessger打印的日志信息，可以在build选项卡中选择
@@ -189,6 +191,7 @@ public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnv
 ##  代码生成办法
 一键，点击锤子按钮即可 具体看github 
 [apt一键生成viewHolder](https://github.com/nbwzlyd/APT_RecyclerViewHolder)
+
 生成位置在
 app--->build--->generated-->source-->apt 下面
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20181214163956395.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3d6bHlkMQ==,size_16,color_FFFFFF,t_70)
