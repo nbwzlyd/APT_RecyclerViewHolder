@@ -189,4 +189,6 @@ public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnv
 ##  代码生成办法
 一键，点击锤子按钮即可 具体看github 
 [apt一键生成viewHolder](https://github.com/nbwzlyd/APT_RecyclerViewHolder)
-
+生成位置在
+app--->build--->generated-->source-->apt 下面
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20181214163956395.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3d6bHlkMQ==,size_16,color_FFFFFF,t_70)
